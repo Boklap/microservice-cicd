@@ -13,6 +13,10 @@ const db = mysql.createPool({
     database: process.env.DB_NAME,
 });
 
+app.get('/api/check', async (req, res ) => {
+    return res.status(200).json({ message: 'okay'})
+})
+
 // Add user
 app.post('/users', async (req, res) => {
     const { name, email } = req.body;
