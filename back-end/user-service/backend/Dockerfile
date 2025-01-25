@@ -4,9 +4,14 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install
+RUN npm ci
 
 COPY . .
+
+RUN rm Dockerfile
+RUN addgroup -S app && adduser -S app -G app
+
+USER app
 
 EXPOSE 3001
 

@@ -40,4 +40,4 @@ app.get('/users/:id', async (req, res) => {
     }
 });
 
-app.listen(3001, () => console.log('User Service running on port 3001'));
+app.listen(process.env.BACKEND_PORT, () => console.log('User Service running on port 3001'));

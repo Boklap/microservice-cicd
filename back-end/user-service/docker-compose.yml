@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   mysql:
-    image: mysql:9.2.0
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 30s
@@ -32,7 +34,7 @@ services:
 
   user-service:
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile
     depends_on:
       mysql:
