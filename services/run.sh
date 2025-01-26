@@ -1,11 +1,10 @@
-cd user-service
-docker compose up -d --build
-cd ..
+#!/bin/bash
 
-cd product-service
-docker compose up -d --build
-cd ..
+services=("user-service" "product-service" "order-service")
 
-cd order-service
-docker compose up -d --build
-cd ..
+for service in "${services[@]}"; do
+  echo "Building and starting $service..."
+  cd $service
+  docker compose up -d --build
+  cd ..
+done
