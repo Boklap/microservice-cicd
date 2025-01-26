@@ -14,7 +14,7 @@ services:
       start_interval: 10s
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRESS_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB} 
     volumes:
       - product_data:/var/lib/postgresql/12.22/data
@@ -47,7 +47,7 @@ services:
       retries: 3
       start_period: 20s
       start_interval: 10s
-    env_files: ./backend/.env
+    env_file: ./backend/.env
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
