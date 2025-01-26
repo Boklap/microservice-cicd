@@ -1,5 +1,5 @@
 const express = require('express');
-const { ObjectId } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const axios = require('axios');
 require('dotenv').config();
 
@@ -10,10 +10,6 @@ app.use(express.json());
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.DB_NAME);
 const orders = db.collection(process.env.COLLECTION);
-
-app.get('/api/check', async( req, res ) => {
-    res.status(200).json({ message: "ok" })
-})
 
 // Add order
 app.post('/orders', async (req, res) => {
