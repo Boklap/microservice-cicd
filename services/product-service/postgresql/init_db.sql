@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS bokman;
+CREATE DATABASE bokman;
 
 \c bokman;
 
