@@ -15,7 +15,7 @@ const pool = new Pool({
 });
 
 app.get('/api/check', async ( req, res ) => {
-    res.status(200).json({ message: ok })
+    res.status(200).json({ message: "ok" })
 })
 
 // Add product
