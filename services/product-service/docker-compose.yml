@@ -19,7 +19,7 @@ services:
     ports:
       - "${DB_PORT}:${DB_PORT}"
     networks:
-      - backend_network
+      - bokman_network
     logging:
       driver: "json-file"
       options:
@@ -49,7 +49,7 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
-      - backend_network
+      - bokman_network
     logging:
       driver: "json-file"
       options:
@@ -62,8 +62,8 @@ services:
           memory: "512M"
   
 networks:
-  backend_network:
-    driver: bridge
+  bokman_network:
+    external: true
 
 volumes:
   product_data:

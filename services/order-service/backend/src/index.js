@@ -15,6 +15,7 @@ const orders = db.collection(process.env.COLLECTION);
 app.post('/orders', async (req, res) => {
     const { user_id, product_ids } = req.body;
     try {
+        console.log()
         // Get user data
         const userResponse = await axios.get(`http://user-service-backend-1:3001/users/${user_id}`);
         const user = userResponse.data;

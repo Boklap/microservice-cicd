@@ -62,7 +62,7 @@ services:
 
 networks:
   bokman_network:
-    driver: bridge
+    external: true
 
 volumes:
   order_data:
