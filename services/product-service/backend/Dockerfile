@@ -2,7 +2,7 @@ FROM node:alpine3.20
 
 WORKDIR /app
 
-COPY package*.json .
+COPY ./package*.json ./
 
 RUN npm ci
 
@@ -13,6 +13,6 @@ RUN addgroup -S app && adduser -S app -G app
 
 USER app
 
-EXPOSE 3001
+EXPOSE 3002
 
 CMD ["node", "src/index.js"]

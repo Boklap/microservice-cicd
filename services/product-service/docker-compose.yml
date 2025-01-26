@@ -1,21 +1,23 @@
 version: "3.8"
 
 services:
-  mysql:
+  postgresql:
     build:
-      context: ./mysql
+      context: ./postgresql
       dockerfile: Dockerfile
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -h localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
       start_interval: 10s
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRESS_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB} 
     volumes:
-      - user_data:/var/lib/mysql
+      - product_data:/var/lib/postgresql/12.22/data
     ports:
       - "${DB_PORT}:${DB_PORT}"
     networks:
@@ -30,22 +32,22 @@ services:
         limits:
           cpus: "0.5"
           memory: "512M"
-
+    
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     depends_on:
-      mysql:
+      postgresql:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "-H", "Content-Type: application/json", "http://localhost:${BACKEND_PORT}/api/check"]
+      test: ["CMD", "curl", "-f", "http://localhost:${BACKEND_PORT}/api/check"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
       start_interval: 10s
-    env_file: ./backend/.env
+    env_files: ./backend/.env
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
@@ -60,10 +62,10 @@ services:
         limits:
           cpus: "0.5"
           memory: "512M"
-
+  
 networks:
   backend_network:
     driver: bridge
 
 volumes:
-  user_data:
+  product_data:

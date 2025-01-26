@@ -14,6 +14,10 @@ const pool = new Pool({
     port: process.env.DB_PORT,
 });
 
+app.get('/api/check', async ( req, res ) => {
+    res.status(200).json({ message: ok })
+})
+
 // Add product
 app.post('/products', async (req, res) => {
     const { name, price } = req.body;
