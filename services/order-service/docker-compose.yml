@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  mongodb:
+    build:
+      context: ./mongodb
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+      start_interval: 10s
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - order_data:/data/db
+    networks:
+      - bokman_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-H", "Content-Type: application/json", "http://localhost:${BACKEND_PORT}/api/check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+      start_interval: 10s
+    env_file: ./backend/.env
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    networks:
+      - bokman_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+  
+
+networks:
+  bokman_network:
+    driver: bridge
+
+volumes:
+  order_data:
+  

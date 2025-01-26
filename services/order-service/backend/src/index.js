@@ -16,12 +16,12 @@ app.post('/orders', async (req, res) => {
     const { user_id, product_ids } = req.body;
     try {
         // Get user data
-        const userResponse = await axios.get(`http://localhost:3001/users/${user_id}`);
+        const userResponse = await axios.get(`http://user-service-backend-1:3001/users/${user_id}`);
         const user = userResponse.data;
 
         // Get product data
         const products = await Promise.all(
-            product_ids.map((id) => axios.get(`http://localhost:3002/products/${id}`))
+            product_ids.map((id) => axios.get(`http://product-service-backend-1:3002/products/${id}`))
         );
         const total_price = products.reduce((sum, p) => sum + p.data.price, 0);
 
