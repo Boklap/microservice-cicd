@@ -32,7 +32,7 @@ services:
           cpus: "0.5"
           memory: "512M"
 
-  user-service:
+  backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -40,7 +40,7 @@ services:
       mysql:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${BACKEND_PORT}/api/check"]
+      test: ["CMD", "curl", "-f", "-H", "Content-Type: application/json", "http://localhost:${BACKEND_PORT}/api/check"]
       interval: 30s
       timeout: 10s
       retries: 3
