@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const axios = require('axios');
 require('dotenv').config();
 
@@ -10,6 +10,10 @@ app.use(express.json());
 const client = new MongoClient(process.env.MONGO_URI);
 const db = client.db(process.env.DB_NAME);
 const orders = db.collection(process.env.COLLECTION);
+
+app.get('/api/check', async( req, res ) => {
+    res.status(200).json({ message: "ok" })
+})
 
 // Add order
 app.post('/orders', async (req, res) => {
@@ -38,7 +42,7 @@ app.post('/orders', async (req, res) => {
 app.get('/orders/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const order = await orders.findOne({ _id: new MongoClient.ObjectId(id) });
+        const order = await orders.findOne({ _id: new ObjectId(id) });
         if (order) res.json(order);
         else res.status(404).json({ error: 'Order not found' });
     } catch (err) {
