@@ -6,28 +6,30 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main/services/user-service/**
+      - main
+    paths:
+      - 'services/user-service/**'
 
 jobs:
   build:
     runs-on: self-hosted
   
-  steps:
-    - name: Disable the user-service containers
-      run: | 
-        echo "Stopping user-service containers"
-        docker compose down || { echo "Failed to stop containers"; exit 1; }
-      working-directory: /home/bokman/docker-learn/microservice-cicd/services/user-service/
+    steps:
+      - name: Disable the user-service containers
+        run: | 
+          echo "Stopping user-service containers"
+          docker compose down || { echo "Failed to stop containers"; exit 1; }
+        working-directory: /home/bokman/docker-learn/microservice-cicd/services/user-service/
 
-    - name: Pull the latest change for user-service
-      run: |
-          echo "Pulling latest changes for user-service..."
-          git pull origin main || { echo "Failed to pull latest changes"; exit 1; }
-      working-directory: /home/bokman/docker-learn/microservice-cicd/
-    
-    - name: Run the user-service docker-compose file
-      run: |
-        echo "Build and run the containers" 
-        docker compose up -d --build || { echo "Failed to run the container"; exit 1; }
-      working-directory: /home/bokman/docker-learn/microservice-cicd/services/user-service/
+      - name: Pull the latest change for user-service
+        run: |
+            echo "Pulling latest changes for user-service..."
+            git pull origin main || { echo "Failed to pull latest changes"; exit 1; }
+        working-directory: /home/bokman/docker-learn/microservice-cicd/
+      
+      - name: Run the user-service docker-compose file
+        run: |
+          echo "Build and run the containers" 
+          docker compose up -d --build || { echo "Failed to run the container"; exit 1; }
+        working-directory: /home/bokman/docker-learn/microservice-cicd/services/user-service/
 
