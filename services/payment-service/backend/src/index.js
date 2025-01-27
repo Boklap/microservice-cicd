@@ -15,7 +15,7 @@ app.post('/payments', async (req, res) => {
     const { order_id } = req.body;
     try {
         // Get order data
-        const orderResponse = await axios.get(`http://localhost:3003/orders/${order_id}`);
+        const orderResponse = await axios.get(`http://order-service-backend-1:3003/orders/${order_id}`);
         const order = orderResponse.data;
 
         const payment = { order_id, amount: order.total_price, status: 'completed' };
