@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 redis-server --daemonize yes
 redis-cli set payment:1 '{"order_id":1,"amount":100,"status":"completed"}'
