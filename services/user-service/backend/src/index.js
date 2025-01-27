@@ -14,7 +14,6 @@ const db = mysql.createPool({
 });
 
 app.get('/api/check', async (req, res ) => {
-    console.log('hee hee hee haw')
     return res.status(200).json({ message: 'okay'})
 })
 

@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ secrets.RUNS_ON }}
+    runs-on: self-hosted
   
     steps:
       - name: Disable the user-service containers
