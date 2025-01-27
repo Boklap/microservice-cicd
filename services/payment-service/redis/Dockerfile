@@ -8,4 +8,4 @@ RUN chmod +x ./init_db.sh
 
 COPY ./redis.conf /usr/local/etc/redis/redis.conf
 
-CMD ["sh", "-c", "./init_db.sh"]
+CMD ["./init_db.sh"]
