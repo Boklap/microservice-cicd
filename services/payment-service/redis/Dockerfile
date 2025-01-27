@@ -8,4 +8,4 @@ COPY ./init_db.sh ./
 
 RUN chmod +x ./init_db.sh
 
-CMD ["./init_db.sh"]
+CMD ["echo \"hehe\"", "./init_db.sh"]
