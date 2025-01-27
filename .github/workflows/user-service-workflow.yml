@@ -8,7 +8,7 @@ on:
     branches:
       - ${{ secrets.BRANCH }}
     paths:
-      - '${{ secrets.USER_SERVICE_PATH }}'
+      - '/services/user-service/**'
 
 jobs:
   build:
