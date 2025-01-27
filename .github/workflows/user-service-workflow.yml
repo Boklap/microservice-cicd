@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - ${{ secrets.BRANCH }}
+      - main
     paths:
       - '/services/user-service/**'
 
