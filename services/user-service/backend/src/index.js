@@ -14,7 +14,7 @@ const db = mysql.createPool({
 });
 
 app.get('/api/check', async (req, res ) => {
-    return res.status(200).json({ message: 'okay'})
+    return res.status(200).json({ message: 'ok'})
 })
 
 // Add user
